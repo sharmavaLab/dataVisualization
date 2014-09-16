@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="lcs_dv">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
+    <link href="../css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="../libs/angular.js"></script>
+    <script src="../libs/custom/app.js"></script>
 
     <title>Data Visualization dashboard</title>
 
@@ -15,7 +19,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -57,28 +61,32 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Load Data</a></li>
+            <li class="active"><a href="#">Options</a></li>
+            <li><a href="#">  </a></li>
             <li><a href="#">Link1</a></li>
             <li><a href="#">Link2</a></li>
-            <li><a href="#">Link3</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Link4</a></li>
-            <li><a href="">Link5</a></li>
-            <li><a href="">Link6</a></li>
-            <li><a href="">Link7</a></li>
-            <li><a href="">Link8</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Link9</a></li>
-            <li><a href="">Link10</a></li>
-            <li><a href="">Link11</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
-
-          <h2>Loading content goes here</h2>
+          <div id="dataUpload">
+                <div>
+                 Load file from local system : <button>Browse</button>
+                </div>
+          </div> 
+          <div>
+           <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Uploaded On</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+          </div>
+          
 
           
         </div>

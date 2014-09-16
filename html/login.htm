@@ -15,15 +15,25 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
-
+    <link href="../css/signin.css" rel="stylesheet">
+   
+    
     
   </head>
 
   <body>
 	<div class = "row"> 
-    <div class="col-md-2 col-md-offset-5 container">
-
+	<div id="includedContent" class="col-md-5  container" style="float:left"> 
+	 <div>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="../libs/three.min.js"></script>
+<script type="text/javascript" src="../libs/d3Force3d.js"></script>
+<script type="text/javascript" src="../libs/jquery.js"></script>
+<div id="canvas-svg" style="width:50%"></div>
+<script type="text/javascript" src="../libs/loginGIF.js"></script>
+</div>
+    </div>	
+    <div class="col-md-6 container" style="float:right">
       <form class="form-signin" role="form">
         <h2 class="form-signin-heading">Log in</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus>
@@ -100,10 +110,9 @@
   </div>
 </div>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="app.js"></script>
-	<script src="register.js"></script>
+	<script src="../libs/custom/app.js"></script>
+	<script src="../libs/custom/register.js"></script>
   </body>
 </html>
