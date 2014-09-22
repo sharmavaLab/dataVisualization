@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" ng-app="lcs_dv">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +10,29 @@
     <link rel="icon" href="../../favicon.ico">
     <link href="../css/bootstrap.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.css" rel="stylesheet" />
+	<style>
+		.node circle {
+   fill: #fff;
+   stroke: steelblue;
+   stroke-width: 1.5px;
+}
+.node {
+   font: 10px sans-serif;
+}
+.link {
+   fill: none;
+   stroke: #ccc;
+   stroke-width: 1.5px;
+}
+line {
+   stroke: black;
+}
+	</style>
+		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script src="../libs/angular.js"></script>
     <script src="../libs/custom/app.js"></script>
+	
+
 
     <title>Data Visualization dashboard</title>
 
@@ -30,8 +51,8 @@
     <![endif]-->
   </head>
 
-  <body>
-
+  <body ng-app = "lcs-viz-module" ng-controller = "lcs-viz-controller">
+ 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -68,7 +89,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+          <h1 class="page-header">Dashboard {{data.userName}}</h1>
           <div id="dataUpload">
                 <div>
                  Load file from local system : <button>Browse</button>
@@ -96,13 +117,13 @@
         <h4 class="modal-title" id="myModalLabel">Visualization</h4>
       </div>
       <div class="modal-body" id="visualizeBody">
-        <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+        <!--
 <script type="text/javascript" src="../libs/three.min.js"></script>
 <script type="text/javascript" src="../libs/d3Force3d.js"></script>
 <script type="text/javascript" src="../libs/jquery.js"></script>
 <div id="canvas-svg" style="width:50%"></div>
-<script type="text/javascript" src="../libs/loginGIF.js"></script>
-      </div>
+<script type="text/javascript" src="../libs/loginGIF.js"></script>-->
+</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
@@ -117,9 +138,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="../libs/custom/treeBacteria.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>

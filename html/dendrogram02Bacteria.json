@@ -1,0 +1,60 @@
+{
+  "name": "phylogeny", "y" : 0,
+  "children": [
+    {
+    "name": "clade", "y" :10,
+    "children": [
+      {"name":"clade", "y": 20,
+      "children":[
+      {"name":"Streptococcus_thermophilus_ND03(NC_017563)","y":34}
+      ]
+     },
+     {"name":"clade","y":20,
+      "children":[
+        {"name":"clade","y":75,
+         "children":[
+          {"name":"Streptococcus_thermophilus_MN_ZLW_002(NC_017927)","y":88}
+         ]
+        },
+        {"name":"clade","y":75,
+          "children":[
+            {"name":"Streptococcus_thermophilus_LMD_9(NC_008532)","y":128}
+          ]
+        }
+
+      ]
+    },
+    {"name":"clade", "y":20,
+      "children":[
+      {"name":"clade","y":34,
+        "children":[
+        {"name":"Streptococcus_thermophilus_JIM_8232(NC_017581)","y":378},
+        {"name":"clade","y":125,
+          "children":[
+          {"name":"clade","y":277,
+          "children":[
+            {"name":"Streptococcus_thermophilus_mtcc_5460","y":1200},
+            {"name":"Streptococcus_thermophilus_mtcc_5461","y":1200}
+          ]
+          },
+          {"name":"clade","y":158,
+          "children":[
+          {"name":"Streptococcus_thermophilus_CNRZ1066(NC_006449)","y":197},
+          {"name":"clade","y":172,
+          "children":[
+          {"name":"Streptococcus_thermophilus_LMG_18311(NC_006448)","y":247},
+          {"name":"Streptococcus_thermophilus_cncm_i_1630","y":1143}
+          ]
+          }
+          ]
+          }
+          ]
+        }
+        ]
+      }
+      ]
+    }
+    ]
+  }
+  ]
+}
