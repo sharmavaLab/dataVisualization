@@ -11,7 +11,7 @@
     <link href="../css/bootstrap.css" rel="stylesheet" />
     <link href="../css/bootstrap-theme.css" rel="stylesheet" />
 	<style>
-		.node circle {
+	.node circle {
    fill: #fff;
    stroke: steelblue;
    stroke-width: 1.5px;
@@ -80,19 +80,11 @@ line {
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Options</a></li>
-            <li><a href="#">  </a></li>
-            <li><a href="#">Link1</a></li>
-            <li><a href="#">Link2</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard {{data.userName}}</h1>
           <div id="dataUpload">
                 <div>
-                 Load file from local system : <button>Browse</button>
+                 <h3>Load file from local system : <button class = "btn btn-primary">Browse</button></h3>
                 </div>
           </div> 
           <div>
@@ -107,9 +99,22 @@ line {
       </tbody>
     </table>
           </div>
-		  <a class = "btn btn-success" data-toggle="modal" data-target="#visualize" >Visualize</a>
-		  <!-- Modal -->
-<div class="modal fade" id="visualize" tabindex="-1" role="dialog">
+		  <a class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize(data.structures)">Visualize</a>
+		  
+
+        </div>
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Options</a></li>
+            <li><a href="#">  </a></li>
+            <li><a href="#">Link1</a></li>
+            <li><a href="#">Link2</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+		<!-- Modal -->
+		<div class="modal fade" id="visualize" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -131,16 +136,19 @@ line {
     </div>
   </div>
 </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="../libs/custom/treeBacteria.js"></script>
+	
+	<script>
+	$('#visualize').on('shown.bs.modal', function () {
+    $(this).find('.modal-dialog').css({width:'auto',
+                               height:'auto', 
+                              'max-height':'100%'});
+});</script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>
