@@ -11,6 +11,11 @@ class Controller
 		else
 			return "User Not Present";
 	}
+	public function insertUser($usrname,$upswd,$fname,$lname,$email)
+	{
+		$user = new User($usrname, $upswd);
+		$user->add();
+	}
 }
 
 ?>

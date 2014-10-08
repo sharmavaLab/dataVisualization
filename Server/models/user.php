@@ -38,5 +38,16 @@ class User
 		else
 			return true;
 	}
+	public function add()
+	{
+		$this->database->setDatabase('DataVisualization');
+		$collection = $this->database->getCollection('user');
+		$user = array(
+                        '_id' =>"$this->userName",
+                        'password' => "$this->password"
+                        );
+		$isInsert = $collection->insert( $user);
+        return $isInsert;
+		}
 }
 ?>

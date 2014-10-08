@@ -43,6 +43,29 @@ lcsViz.controller("lcs-login-controller",function($scope,$http){
                     });
 		}
 	};
+	
+	$scope.register = function() {
+		if( typeof $scope.fname === 'undefined' || typeof $scope.lname === 'undefined' ||typeof $scope.username === 'undefined' || typeof $scope.email === 'undefined' ||typeof $scope.password === 'undefined'){
+			alert("PLease enter all fields");
+		}
+		else{
+			$http.post('./../Server/addUser.php', {'fname': $scope.fname, 'lname': $scope.lname, 'uname':$scope.username, 'email':$scope.email, 'password':$scope.password}
+                    ).success(function(data, status, headers, config) {
+						alert(data);
+                        if(data == "success"){
+							$scope.isAdded = false;
+							alert("User added");
+						}
+						else{
+							$scope.isAdded = true;
+						}
+                    }).error(function(data, status) { 
+                       alert("error");
+                    });
+			
+		}
+
+	};
 });
 
 
