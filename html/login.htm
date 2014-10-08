@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en"  ng-app="login">
+<html lang="en" >
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +21,7 @@
     
   </head>
 
-  <body>
+  <body ng-app = "lcs-viz-module" ng-controller = "lcs-login-controller">
 	<div class = "row"> 
 	<div id="includedContent" class="col-md-5  container" style="float:left"> 
 	 <div>
@@ -29,6 +29,8 @@
 <script type="text/javascript" src="../libs/three.min.js"></script>
 <script type="text/javascript" src="../libs/d3Force3d.js"></script>
 <script type="text/javascript" src="../libs/jquery.js"></script>
+<script src="../libs/angular.js"></script>
+    <script src="../libs/custom/app.js"></script>
 <div id="canvas-svg" style="width:50%"></div>
 <script type="text/javascript" src="../libs/loginGIF.js"></script>
 </div>
@@ -36,17 +38,20 @@
     <div class="col-md-6 container" style="float:right">
       <form class="form-signin" role="form">
         <h2 class="form-signin-heading">Log in</h2>
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="text" class="form-control" placeholder="User Name" ng-model="entered_username" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" ng-model="entered_password" required>
         <label class="checkbox">
           <input type="checkbox" value="remember-me"> Remember me 
         </label>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click=login()>Sign in</button>
 		<button class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#register">New user</button>
       </form>
 
     </div> <!-- /container -->
+	
 	</div>
+<div class="alert alert-danger " role="alert" ng-show="isValid">Please enter correct credentials</div>
+
 	<!-- Modal for new User-->
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

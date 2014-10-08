@@ -27,11 +27,17 @@
 line {
    stroke: black;
 }
+.bar {
+    height: 18px;
+    background: #66CC66;
+}
 	</style>
-		<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
     <script src="../libs/angular.js"></script>
     <script src="../libs/custom/app.js"></script>
 	
+	<link href="http://hayageek.github.io/jQuery-Upload-File/uploadfile.min.css" rel="stylesheet">
+
 
 
     <title>Data Visualization dashboard</title>
@@ -83,9 +89,22 @@ line {
 	        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard {{data.userName}}</h1>
           <div id="dataUpload">
+				<div id="fileuploader">Upload</div>
+				<hr>
+				<div id="fileuploader1">Upload</div>
+				<hr>
+				<div id="fileuploader2">Upload</div>
+		  
                 <div>
                  <h3>Load file from local system : <button class = "btn btn-primary">Browse</button></h3>
-                </div>
+                 <input id="fileupload" type="file" name="files[]" data-url="login.htm" multiple>
+
+				</div>
+				<hr>
+				<div id="progress">
+					<div class="bar" style="width: 0%;"></div>
+				</div>
+				
           </div> 
           <div>
            <table class="table table-striped">
@@ -143,12 +162,50 @@ line {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
+	<script src="http://hayageek.github.io/jQuery-Upload-File/jquery.uploadfile.min.js"></script>
+
+	
+	<script src="../libs/FileUpload/vendor/jquery.ui.widget.js"></script>
+	<script src="../libs/FileUpload/jquery.iframe-transport.js"></script>
+	<script src="../libs/FileUpload/jquery.fileupload.js"></script>
+	
+	
 	<script>
+	$(function () {
+	
+	$("#fileuploader").uploadFile({
+	url:"YOUR_FILE_UPLOAD_URL",
+	fileName:"myfile"
+	});
+	$("#fileuploader1").uploadFile({
+		//url:"http://hayageek.com/examples/jquery/ajax-multiple-file-upload/upload.php",
+		multiple:true,
+		allowedTypes:"xml,txt",
+		fileName:"myfile"
+	});
+	
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        },
+		progressall: function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress .bar').css(
+            'width',
+            progress + '%'
+			);
+		}
+    });
 	$('#visualize').on('shown.bs.modal', function () {
     $(this).find('.modal-dialog').css({width:'auto',
                                height:'auto', 
                               'max-height':'100%'});
-});</script>
+});
+});
+</script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>

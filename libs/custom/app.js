@@ -6,6 +6,45 @@ lcsViz.controller("lcs-viz-controller",function($scope,$http){
          $scope.data = response.data;
        });
 });
+lcsViz.controller("lcs-login-controller",function($scope,$http){
+	
+       $scope.login = function() {
+	   if( typeof $scope.entered_username === 'undefined' || typeof $scope.entered_password === 'undefined');
+	   else{
+				/* var request = $http({
+                    method: "post",
+                    url: "./../Server/demo.php",
+                    data:$.param({"username":"someuser","password": "somepass"}),
+					headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+                });
+ 
+                // Store the data-dump of the FORM scope.
+                request.success(
+                    function( html ) {
+					
+						alert(html);
+                        $scope.cfdump = html;
+ 
+                    }
+			);*/
+			
+			 $http.post('./../Server/authenticate.php', {'uname': $scope.entered_username, 'pswd': $scope.entered_password}
+                    ).success(function(data, status, headers, config) {
+                        if(data == "User Present"){
+							$scope.isValid = false;
+							alert("User present");
+						}
+						else{
+							$scope.isValid = true;
+						}
+                    }).error(function(data, status) { // called asynchronously if an error occurs
+// or server returns response with an error status.
+                       alert("error");
+                    });
+		}
+	};
+});
+
 
 lcsViz.run(function($rootScope) {
  $rootScope.doVisualize = function(dataVar) {
