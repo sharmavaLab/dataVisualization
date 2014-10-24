@@ -50,7 +50,9 @@
     </div> <!-- /container -->
 	
 	</div>
+	
 <div class="alert alert-danger " role="alert" ng-show="isValid">Please enter correct credentials</div>
+
 
 	<!-- Modal for new User-->
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -63,6 +65,10 @@
       <div class="modal-body">
 
         <div class="row">
+		<div class="alert alert-danger " role="alert" ng-show="duplicate">Username already taken!!!</div>
+		<div class="alert alert-success " role="alert" ng-show="isAdded">User registered successfully</div>
+
+
 		 <div class="col-xs-1 col-sm-1 col-md-1 ">
 		 </div>
     <div class="col-xs-10 col-sm-6 col-md-10 ">

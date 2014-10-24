@@ -8,31 +8,14 @@ lcsViz.controller("lcs-viz-controller",function($scope,$http){
 });
 lcsViz.controller("lcs-login-controller",function($scope,$http){
 	
-       $scope.login = function() {
+       $scope.login = function(){
 	   if( typeof $scope.entered_username === 'undefined' || typeof $scope.entered_password === 'undefined');
 	   else{
-				/* var request = $http({
-                    method: "post",
-                    url: "./../Server/demo.php",
-                    data:$.param({"username":"someuser","password": "somepass"}),
-					headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-                });
- 
-                // Store the data-dump of the FORM scope.
-                request.success(
-                    function( html ) {
-					
-						alert(html);
-                        $scope.cfdump = html;
- 
-                    }
-			);*/
-			
 			 $http.post('./../Server/authenticate.php', {'uname': $scope.entered_username, 'pswd': $scope.entered_password}
                     ).success(function(data, status, headers, config) {
                         if(data == "User Present"){
 							$scope.isValid = false;
-							alert("User present");
+							alert("User present");//redirect
 						}
 						else{
 							$scope.isValid = true;
@@ -51,13 +34,14 @@ lcsViz.controller("lcs-login-controller",function($scope,$http){
 		else{
 			$http.post('./../Server/addUser.php', {'fname': $scope.fname, 'lname': $scope.lname, 'uname':$scope.username, 'email':$scope.email, 'password':$scope.password}
                     ).success(function(data, status, headers, config) {
-						alert(data);
-                        if(data == "success"){
-							$scope.isAdded = false;
-							alert("User added");
+						console.log(data);
+                        if(data == "Success"){
+							$scope.isAdded = true;
+							$scope.duplicate = false;
 						}
 						else{
-							$scope.isAdded = true;
+							$scope.isAdded = false;
+							$scope.duplicate = true;
 						}
                     }).error(function(data, status) { 
                        alert("error");

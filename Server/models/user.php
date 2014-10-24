@@ -29,7 +29,7 @@ class User
 	}
 	public function authenticate()
 	{
-		$this->database->setDatabase('DataVisualization');
+		$this->database->setDatabase('datavisualization');
 		$collection = $this->database->getCollection('user');
 		$userName = $collection->findOne(array('_id' => "$this->userName", 'password'=>"$this->password"));
 		//print_r($userName);
@@ -46,8 +46,16 @@ class User
                         '_id' =>"$this->userName",
                         'password' => "$this->password"
                         );
+		try{
 		$isInsert = $collection->insert( $user);
-        return $isInsert;
+		}
+		catch (MongoWriteConcernException $e) {
+		  return "Failure ";
+		}
+		if($isInsert)
+			return "Success";
+		else
+			return "Failure";
 		}
 }
 ?>
