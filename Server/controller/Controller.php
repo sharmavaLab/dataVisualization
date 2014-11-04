@@ -14,6 +14,7 @@ class Controller
 	public function insertUser($usrname,$upswd,$fname,$lname,$email)
 	{
 		$user = new User($usrname, $upswd);
+		$user->addOtherDtails($fname,$lname,$email);
 		return $user->add();
 	}
 }

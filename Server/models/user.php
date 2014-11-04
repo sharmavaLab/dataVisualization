@@ -4,6 +4,9 @@ class User
 {
 	private $userName;
 	private $password;
+	private $fname;
+	private $lname;
+	private $email;
 	private $database;
 	public function __construct($userName,$password)
 	{
@@ -27,12 +30,18 @@ class User
 	{
 		return $this->password;
 	}
+	public function addOtherDtails($fname,$lname,$email)
+	{
+		$this->fname = $fname;
+		$this->lname = $lname;
+		$this->email = $email;
+	}
 	public function authenticate()
 	{
 		$this->database->setDatabase('datavisualization');
 		$collection = $this->database->getCollection('user');
 		$userName = $collection->findOne(array('_id' => "$this->userName", 'password'=>"$this->password"));
-		//print_r($userName);
+		$this->database->database_connect->close();
 		if (!$userName['_id'])	
 			return false;
 		else
@@ -40,16 +49,21 @@ class User
 	}
 	public function add()
 	{
-		$this->database->setDatabase('DataVisualization');
+		$this->database->setDatabase('datavisualization');
 		$collection = $this->database->getCollection('user');
 		$user = array(
                         '_id' =>"$this->userName",
-                        'password' => "$this->password"
+                        'password' => "$this->password",
+						'lastname' => "$this->lname",
+						'firstName' => "$this->fname",
+						'email' => "$this->email"
                         );
 		try{
 		$isInsert = $collection->insert( $user);
+		$this->database->database_connect->close();
 		}
 		catch (MongoWriteConcernException $e) {
+				$this->database->database_connect->close();
 		  return "Failure ";
 		}
 		if($isInsert)

@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+	
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Generic page styles -->
+<link rel="stylesheet" href="../libs/fileUpload/css/style.css">
+<!-- blueimp Gallery styles -->
+<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+<link rel="stylesheet" href="../libs/fileUpload/css/jquery.fileupload.css">
+<link rel="stylesheet" href="../libs/fileUpload/css/jquery.fileupload-ui.css">
 		<style>
 	.node circle {
    fill: #fff;
@@ -29,6 +38,9 @@ line {
     background: #66CC66;
 }
 	</style>
+	
+	
+	
 	  <!-- Bootstrap core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,11 +56,13 @@ line {
 <script type="text/javascript" src="../libs/three.min.js"></script>
 <script type="text/javascript" src="../libs/d3Force3d.js"></script>
 <script type="text/javascript" src="../libs/jquery.js"></script>
-<script src="../libs/angular.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script><script src="../libs/angular.js"></script>
 <script src="../libs/angular-route.min.js"></script>
 <script src="../libs/angular-cookies.min.js"></script>
 <script src="../libs/custom/app.js"></script>
 <script src="../libs/custom/controllers.js"></script>
+<script src="../libs/custom/sha256.js"></script>
     
   </head>
 
@@ -56,9 +70,11 @@ line {
   <div ng-view></div>
 	
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+	<script src="../libs/fileUpload/js/jquery.fileupload.js"></script>
 	<script src="../libs/custom/app.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
 
 		<script>
 	$(function () {

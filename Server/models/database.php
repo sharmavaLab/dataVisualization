@@ -2,8 +2,8 @@
    
    class Database
    {
-		private $database_connect;
-		private $database;
+		public $database_connect;
+		public $database;
 		
 		public function __construct()
 		{

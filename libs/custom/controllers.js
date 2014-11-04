@@ -1,11 +1,32 @@
 var loginControllers = angular.module('loginControllers',[]); 
 
+loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadManager',function ($scope, $rootScope, uploadManager) {
+    $scope.files = [];
+    $scope.percentage = 0;
+    $scope.upload = function () {
+        uploadManager.upload();
+        $scope.files = [];
+    };
+
+    $rootScope.$on('fileAdded', function (e, call) {
+		
+        $scope.files.push(call);
+        $scope.$apply();
+    });
+
+    $rootScope.$on('uploadProgress', function (e, call) {
+        $scope.percentage = call;
+        $scope.$apply();
+    });
+}]);
+
 loginControllers.controller("LoginController",function($scope,$http,$location,sessionService){
 	
        $scope.login = function(){
 	   if( typeof $scope.entered_username === 'undefined' || typeof $scope.entered_password === 'undefined');
 	   else{
-			 $http.post('./../Server/authenticate.php', {'uname': $scope.entered_username, 'pswd': $scope.entered_password}
+			var hash_password = sha256_digest($scope.entered_password);
+			 $http.post('./../Server/authenticate.php', {'uname': $scope.entered_username, 'pswd': hash_password}
                     ).success(function(data, status, headers, config) {
 					
                         if(data == "User Present"){
@@ -32,16 +53,19 @@ loginControllers.controller("LoginController",function($scope,$http,$location,se
 			alert("Please enter all fields");
 		}
 		else{
-			$http.post('./../Server/addUser.php', {'fname': $scope.fname, 'lname': $scope.lname, 'uname':$scope.username, 'email':$scope.email, 'password':$scope.password}
+			var hash_password= sha256_digest($scope.password);
+			$http.post('./../Server/addUser.php', {'fname': $scope.fname, 'lname': $scope.lname, 'uname':$scope.username, 'email':$scope.email, 'password':hash_password}
                     ).success(function(data, status, headers, config) {
 						console.log(data);
                         if(data == "Success"){
 							$scope.isAdded = true;
 							$scope.duplicate = false;
+							$scope.closeModal  = true;
 						}
 						else{
 							$scope.isAdded = false;
 							$scope.duplicate = true;
+							$scope.closeModal = false;
 						}
                     }).error(function(data, status) { 
                        alert("error");

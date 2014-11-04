@@ -29,8 +29,34 @@
 	        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard {{user}}</h1> 
           
-		  <a class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize(data.structures)">Visualize</a>
-		  
+		  <h2>File Upload</h2>
+			<div ng-controller="FileUploadCtrl">
+				<div class="control-group">
+					<div class="controls">
+						<span class="btn btn-success fileinput-button">
+							<i class="icon-plus icon-white"></i>
+							<input type="file" name="file" data-url="home/upload" upload multiple><span>Add files...</span>
+						</span>
+					</div>
+				</div>
+				
+				<div class="progress " ng-show="percentage">
+					<div class="bar" style="width: {{percentage}}%;"></div>
+				</div>
+			
+		  <hr class = "colorgraph">
+		  <div>
+			<span ng-show="!files.length">No files selected</span>
+				<ul>
+					<li ng-repeat="file in files">{{file}}</li>
+				    <a ng-show="files.length" class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize(data.structures)">Visualize</a>
+				</ul>
+		  </div>
+		  <hr class = "colorgraph">
+		  <div class="form-actions">
+					<button type="submit" class="btn btn-primary pull-left" ng-click="upload()">Upload</button>
+          </div>
+				</div>
 
         </div>
         <div class="col-sm-3 col-md-2 sidebar">
