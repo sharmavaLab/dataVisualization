@@ -1,0 +1,15 @@
+bacteria_id	gene_begin	gene_end	gene_direction	gene_name	CRISPR_type
+NC_002737	741835	742623	-	csm6	subtype-III-A
+NC_002737	854757	858863	-	csn1	subtype-II-A
+NC_002737	858863	859732	-	cas1_NMENI	subtype-II-A
+NC_002737	859729	860070	-	cas2	subtype-II-A
+NC_002737	860060	860722	-	csn2	type-II-A
+NC_002737	860825	861256	-	repeat	num_repeat:7
+NC_002737	1283506	1283736	-	repeat	num_repeat:4
+NC_002737	1283885	1284178	+	cas2	universal
+NC_002737	1284189	1285214	+	cas1_DVULG	subtype-I-C
+NC_002737	1285211	1285885	+	cas4	cas
+NC_002737	1285887	1286735	+	csd2	subtype-I-C
+NC_002737	1286740	1288635	+	csd1	subtype-I-C
+NC_002737	1288635	1289363	+	cas5d	subtype-I-C
+NC_002737	1289496	1291904	+	cas3_core	subtype-I-C

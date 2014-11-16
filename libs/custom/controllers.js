@@ -98,6 +98,10 @@ $scope.logout= function(){
 	$location.path('/login');
 
 };
+$('#visualize').on('hidden.bs.modal', function () {
+  console.log("here closed modal");
+  $('#visualizeBody').empty();
+})
 $('#visualize').on('shown.bs.modal', function () {
     $(this).find('.modal-dialog').css({width:'auto',
                                height:'auto', 
@@ -174,7 +178,11 @@ var ymin = Number.MAX_VALUE;
          return "translate(" + x(d.y) + "," + d.x + ")";
       });
    node.append("circle")
-      .attr("r", 4.5);
+      .attr("r", 4.5)
+	  .on("click",function(d){
+	  $('#displayBlock').empty();
+	   doInit();
+	  });
    node.append("text")
       .attr("dx", function(d) { return d.children ? -8 : 8; })
       .attr("dy", 2)
