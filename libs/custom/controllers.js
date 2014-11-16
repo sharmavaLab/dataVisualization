@@ -1,5 +1,5 @@
 var loginControllers = angular.module('loginControllers',[]); 
-
+var jsons=[];
 loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadManager',function ($scope, $rootScope, uploadManager) {
     $scope.files = [];
     $scope.percentage = 0;
@@ -12,6 +12,10 @@ loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadMan
 		
         $scope.files.push(call);
         $scope.$apply();
+    });
+	$rootScope.$on('getJson', function (e, call) {
+        //console.log(call);
+		jsons.push(call);
     });
 
     $rootScope.$on('uploadProgress', function (e, call) {
@@ -83,17 +87,28 @@ loginControllers.controller("dashboardController",function($scope,$http,$locatio
  if($scope.user === null){
 	$location.path('/login');
  }
-$http.get("userData.json").then(function (response){
-         $scope.data = response.data;
-       });
+//$http.get("userDataAAA.json").then(function (response){
+		 //console.log(response);
+         //$scope.data = demo;//response.data;
+		 //console.log(JSON.stringify($scope.data));
+  //     });
 $scope.logout= function(){
 
 	sessionService.destroy('user');
 	$location.path('/login');
 
 };
+$('#visualize').on('shown.bs.modal', function () {
+    $(this).find('.modal-dialog').css({width:'auto',
+                               height:'auto', 
+                              'max-height':'100%'});
+							  });
 $scope.doVisualize = function(dataVar) {
             //alert("I'm global foo!"+dataVar[0]);
+			//console.log(JSON.stringify(dataVar));
+			console.log(jsons[dataVar]);
+			console.log(dataVar);
+			dataVar = jsons[dataVar];
 var width = 1000;
 var height = 1000;
 
@@ -106,6 +121,7 @@ var diagonal = d3.svg.diagonal()
 var svg = d3.select("#visualizeBody").append("svg")
    .attr("width",width)
    .attr("height",height)
+   .attr("transform", "rotate(0)")//change
    .append("g")
    .attr("transform","translate(100,0)");
 
@@ -126,8 +142,8 @@ var ymax = Number.MIN_VALUE;
 var ymin = Number.MAX_VALUE;
 
 //d3.json("dendrogram02Bacteria.json", function(error, json){
-   getXYfromJSONTree(dataVar[0]);
-   var nodes = cluster.nodes(dataVar[0]);
+   getXYfromJSONTree(dataVar);
+   var nodes = cluster.nodes(dataVar);
    var links = cluster.links(nodes);
    nodes.forEach( function(d,i){
       if(typeof xs[i] != 'undefined'){

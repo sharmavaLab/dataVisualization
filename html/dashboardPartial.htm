@@ -48,8 +48,9 @@
 		  <div>
 			<span ng-show="!files.length">No files selected</span>
 				<ul>
-					<li ng-repeat="file in files">{{file}}</li>
-				    <a ng-show="files.length" class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize(data.structures)">Visualize</a>
+					<li ng-repeat="file in files">{{file}}<br>
+					<a ng-show="files.length" class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize($index)">Visualize</a
+					</li>
 				</ul>
 		  </div>
 		  <hr class = "colorgraph">
@@ -70,7 +71,7 @@
       </div>
     </div>
 		<!-- Modal -->
-		<div class="modal fade" id="visualize" tabindex="-1" role="dialog">
+<div class="modal fade" id="visualize" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
