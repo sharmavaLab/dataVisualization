@@ -224,11 +224,13 @@ dataVisualization.directive('upload', ['uploadManager', function factory(uploadM
             $(element).fileupload({
                 dataType: 'text',
                 add: function(e, data) {
-                    uploadManager.add(data);
                     var file = data.files[0];
-                    //console.log(file);
+                    console.log(file);
+					if(file.type=="text/xml"){
+					$('#uploadError').empty();
                     var blob = file.slice(0, file.size);
                     var reader = new FileReader();
+					uploadManager.add(data);
                     reader.readAsBinaryString(blob);
                     reader.onloadend = function(evt) {
                         if (evt.target.readyState == FileReader.DONE) { // DONE == 2
@@ -236,6 +238,11 @@ dataVisualization.directive('upload', ['uploadManager', function factory(uploadM
 							
                         }
                     };
+					}
+					else{
+						//alert("PLease add oinly xml");
+						$('#uploadError').append('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Please upload XML file only!!!</div>');
+					}
                 },
                 progressall: function(e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);

@@ -101,18 +101,17 @@ $scope.logout= function(){
 $('#visualize').on('hidden.bs.modal', function () {
   console.log("here closed modal");
   $('#visualizeBody').empty();
+  $('#displayBlock').empty();
 })
 $('#visualize').on('shown.bs.modal', function () {
     $(this).find('.modal-dialog').css({width:'auto',
                                height:'auto', 
                               'max-height':'100%'});
 							  });
-$scope.doVisualize = function(dataVar) {
+$scope.doVisualize = function(index) {
             //alert("I'm global foo!"+dataVar[0]);
 			//console.log(JSON.stringify(dataVar));
-			console.log(jsons[dataVar]);
-			console.log(dataVar);
-			dataVar = jsons[dataVar];
+			var dataVar = jsons[index];
 var width = 1000;
 var height = 1000;
 
@@ -178,7 +177,7 @@ var ymin = Number.MAX_VALUE;
          return "translate(" + x(d.y) + "," + d.x + ")";
       });
    node.append("circle")
-      .attr("r", 4.5)
+      .attr("r", 7.5)
 	  .on("click",function(d){
 	  $('#displayBlock').empty();
 	   doInit();

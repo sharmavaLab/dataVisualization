@@ -29,8 +29,8 @@
 	        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard {{user}}</h1> 
           
-		  <h2>File Upload</h2>
-			<div ng-controller="FileUploadCtrl">
+		  <h4>Upload XML files </h4>
+			<div  style="max-width: 800px;" ng-controller="FileUploadCtrl">
 				<div class="control-group">
 					<div class="controls">
 						<span class="btn btn-success fileinput-button">
@@ -47,17 +47,18 @@
 		  <hr class = "colorgraph">
 		  <div>
 			<span ng-show="!files.length">No files selected</span>
-				<ul>
-					<li ng-repeat="file in files">{{file}}<br>
-					<a ng-show="files.length" class = "btn btn-success" data-toggle="modal" data-target="#visualize" ng-click="doVisualize($index)">Visualize</a
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-success"  ng-repeat="file in files track by $index" > <b>{{$index+1 +") "+file}}</b>	
+					<a ng-show="files.length" class = "btn btn-success  badge "  data-toggle="modal" data-target="#visualize" ng-click="doVisualize($index)">Visualize</a>
 					</li>
 				</ul>
 		  </div>
 		  <hr class = "colorgraph">
 		  <div class="form-actions">
-					<button type="submit" class="btn btn-primary pull-left" ng-click="upload()">Upload</button>
+					<!--<button type="submit" class="btn btn-primary pull-left" ng-click="upload()">Upload</button>-->
           </div>
-				</div>
+		  <div id="uploadError"></div>
+		</div>
 
         </div>
         <div class="col-sm-3 col-md-2 sidebar">
@@ -78,12 +79,11 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">Visualization</h4>
       </div>
-	  <div class ="modal-body" style="height:150px;" id="displayBlock"></div>
+	  <div class ="modal-body" style="height:130px;" id="displayBlock"></div>
       <div class="modal-body" id="visualizeBody">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
