@@ -35,7 +35,7 @@
 					<div class="controls">
 						<span class="btn btn-success fileinput-button">
 							<i class="icon-plus icon-white"></i>
-							<input type="file" name="file" data-url="home/upload" upload multiple><span>Add files...</span>
+							<input type="file" name="file" data-url="home/upload" data-utype="xml" upload multiple><span>Add files...</span>
 						</span>
 					</div>
 				</div>
@@ -49,6 +49,10 @@
 			<span ng-show="!files.length">No files selected</span>
 				<ul class="list-group">
 					<li class="list-group-item list-group-item-success"  ng-repeat="file in files track by $index" > <b>{{$index+1 +") "+file}}</b>	
+					<span class="btn btn-success fileinput-button badge">
+							<i class="icon-plus icon-white"></i>
+							<input type="file" name="file" data-url="home/upload" data-utype="text" data-index = {{$index}} upload><span>Add node data</span>
+					</span>
 					<a ng-show="files.length" class = "btn btn-success  badge "  data-toggle="modal" data-target="#visualize" ng-click="doVisualize($index)">Visualize</a>
 					</li>
 				</ul>

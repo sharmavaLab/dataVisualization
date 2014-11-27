@@ -1,5 +1,9 @@
-function doInit(){
-  var currentNodeData = readNodeDetails("textData");
+function doInit(raw_data){
+  //var currentNodeData = readNodeDetails("textData");
+  console.log(raw_data);
+  var returned_String=textToJSONParser(raw_data);
+   var currentNodeData =  JSON.parse(JSON.stringify(returned_String));
+  //console.log(currentNodeData);
   populateNodeMap(currentNodeData);
 }
 
@@ -245,6 +249,7 @@ function createHyphen(x1,y1,s,color,svg){
 
 function readNodeDetails(id){
 var raw_data= loadFile(id+".txt");
+//console.log(raw_data);
 var returned_String=textToJSONParser(raw_data);
 return JSON.parse(JSON.stringify(returned_String));
 }
@@ -280,7 +285,7 @@ function textToJSONParser(data){
       for(var j=0; j <first_Row.length;j++){
         interm_Object[first_Row[j]] = new_Row[j]; //create object[key] =value  for the whole row
       }
-      console.log(interm_Object); 
+      //console.log(interm_Object); 
       final_Object.push(interm_Object); //add the create object for the particular row into the array
     }
   }

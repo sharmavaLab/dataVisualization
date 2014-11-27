@@ -15,10 +15,18 @@ loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadMan
     });
 	$rootScope.$on('getJson', function (e, call) {
         //console.log(call);
-		jsons.push(call);
+		var uploadObject={};
+		uploadObject.treeData = call;
+		jsons.push(uploadObject);
     });
-
+	$rootScope.$on('getNode', function (e, call) {
+		var index  = call[0];
+		var nodeData = call[1];
+		jsons[index].nodes = nodeData;
+		//jsons.push(call);
+    });
     $rootScope.$on('uploadProgress', function (e, call) {
+		
         $scope.percentage = call;
         $scope.$apply();
     });
@@ -110,8 +118,8 @@ $('#visualize').on('shown.bs.modal', function () {
 							  });
 $scope.doVisualize = function(index) {
             //alert("I'm global foo!"+dataVar[0]);
-			//console.log(JSON.stringify(dataVar));
-			var dataVar = jsons[index];
+			console.log(jsons[index].nodes);
+			var dataVar = jsons[index].treeData;
 var width = 1000;
 var height = 1000;
 
@@ -180,7 +188,7 @@ var ymin = Number.MAX_VALUE;
       .attr("r", 7.5)
 	  .on("click",function(d){
 	  $('#displayBlock').empty();
-	   doInit();
+	   doInit(jsons[index].nodes);
 	  });
    node.append("text")
       .attr("dx", function(d) { return d.children ? -8 : 8; })

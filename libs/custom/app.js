@@ -48,6 +48,9 @@ dataVisualization.factory('uploadManager', function($rootScope) {
         setProgress: function(percentage) {
             $rootScope.$broadcast('uploadProgress', percentage);
         },
+		sendNodeData: function(node_data){
+			$rootScope.$broadcast('getNode', node_data);
+		},
 		convertXml2JSon: function(formated_Xml){
 		 formated_Xml = formated_Xml.replace(/>\s*/g, '>');  // Replace "> " with ">"
 		formated_Xml = formated_Xml.replace(/\s*</g, '<');  // Replace "< " with "<"
@@ -224,9 +227,10 @@ dataVisualization.directive('upload', ['uploadManager', function factory(uploadM
             $(element).fileupload({
                 dataType: 'text',
                 add: function(e, data) {
+					//console.log(attrs);
                     var file = data.files[0];
-                    console.log(file);
-					if(file.type=="text/xml"){
+                    //console.log(file);
+					if(file.type=="text/xml" && attrs.utype == "xml"){
 					$('#uploadError').empty();
                     var blob = file.slice(0, file.size);
                     var reader = new FileReader();
@@ -239,9 +243,28 @@ dataVisualization.directive('upload', ['uploadManager', function factory(uploadM
                         }
                     };
 					}
+					else if(file.type=="text/plain" && attrs.utype == "text"){
+						var index = attrs.index;
+						$('#uploadError').empty();
+						var blob = file.slice(0, file.size);
+						var reader = new FileReader();
+						//uploadManager.add(data);
+						reader.readAsBinaryString(blob);
+						reader.onloadend = function(evt) {
+                        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+							var node_data = [];
+							node_data[0] = index;
+							node_data[1] = evt.target.result;
+                            uploadManager.sendNodeData(node_data);
+							//console.log(evt.target.result);
+							
+                        }
+                    };
+					}
 					else{
-						//alert("PLease add oinly xml");
-						$('#uploadError').append('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Please upload XML file only!!!</div>');
+						if ( $('#uploadError').children().length == 0 ) {
+						$('#uploadError').append('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><b> &nbsp;Please upload correct file type!!!&nbsp;&nbsp;'+file.name+' is not an required file type</b></div>');
+						}
 					}
                 },
                 progressall: function(e, data) {
