@@ -1,8 +1,8 @@
 function doInit(raw_data){
   //var currentNodeData = readNodeDetails("textData");
-  console.log(raw_data);
-  var returned_String=textToJSONParser(raw_data);
-   var currentNodeData =  JSON.parse(JSON.stringify(returned_String));
+  console.log(JSON.stringify(raw_data));
+  //var returned_String=textToJSONParser(raw_data);
+   var currentNodeData =  JSON.parse(JSON.stringify(raw_data));
   //console.log(currentNodeData);
   populateNodeMap(currentNodeData);
 }
@@ -268,7 +268,7 @@ function loadFile(filename){
   return xhttp.responseText;
 }
 
-function textToJSONParser(data){
+/*function textToJSONParser(data){
 //remove all the tabs from the data
  // alert("came here")
   data = data.replace(/\t/g, ' ');
@@ -290,4 +290,4 @@ function textToJSONParser(data){
     }
   }
   return final_Object;
-}
+}*/

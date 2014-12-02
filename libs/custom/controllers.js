@@ -22,7 +22,12 @@ loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadMan
 	$rootScope.$on('getNode', function (e, call) {
 		var index  = call[0];
 		var nodeData = call[1];
-		jsons[index].nodes = nodeData;
+		console.log(nodeData);
+		nodeData =  textToJSONParser(nodeData);
+		 //console.log(nodeData);
+		var nodeMap = populateNodeDetailsMap(nodeData);
+		 console.log(nodeMap);
+		jsons[index].nodes = nodeMap;
 		//jsons.push(call);
     });
     $rootScope.$on('uploadProgress', function (e, call) {
@@ -118,8 +123,9 @@ $('#visualize').on('shown.bs.modal', function () {
 							  });
 $scope.doVisualize = function(index) {
             //alert("I'm global foo!"+dataVar[0]);
-			console.log(jsons[index].nodes);
+			//console.log(jsons[index].nodes);
 			var dataVar = jsons[index].treeData;
+			var nodeMap = (jsons[index].nodes);
 var width = 1000;
 var height = 1000;
 
@@ -187,8 +193,11 @@ var ymin = Number.MAX_VALUE;
    node.append("circle")
       .attr("r", 7.5)
 	  .on("click",function(d){
+	  var key = getKeyFromName(d.name);
+	  console.log(nodeMap);
+	  console.log(nodeMap[key]);
 	  $('#displayBlock').empty();
-	   doInit(jsons[index].nodes);
+	   doInit(nodeMap[key]);
 	  });
    node.append("text")
       .attr("dx", function(d) { return d.children ? -8 : 8; })
@@ -200,3 +209,47 @@ var ymin = Number.MAX_VALUE;
     //});
         };
 });
+function textToJSONParser(data){
+//remove all the tabs from the data
+ //alert("came here");
+ console.log(data);
+  data = data.replace(/\t/g, ' ');
+  data = data.replace(/\r/g, '');
+  //split the recieved data into multiple rows
+  var split_Rows = data.split(/\n/g);
+  // extract the first row of the data to fetch the ROW HEADERS from the file
+  var first_Row=split_Rows[0].split(' ');
+  var final_Object = [];
+  for(var i=1; i< split_Rows.length;i++){
+    var new_Row = split_Rows[i].split(' ');  
+    if( new_Row.length >1){  //if the row is not empty
+      var interm_Object ={};
+      for(var j=0; j <first_Row.length;j++){
+        interm_Object[first_Row[j]] = new_Row[j]; //create object[key] =value  for the whole row
+      }
+      //console.log(interm_Object); 
+      final_Object.push(interm_Object); //add the create object for the particular row into the array
+    }
+  }
+  return final_Object;
+}
+function populateNodeDetailsMap(jsonObject){
+	var nodeDetailsMap = new Object(); 
+   for(var z=0;z<jsonObject.length;z++){
+        var temp  = jsonObject[z];
+
+        if(nodeDetailsMap[temp.bacteria_id]){
+            var nodeArray = nodeDetailsMap[temp.bacteria_id];
+            nodeArray.push(temp);
+        }else{
+          nodeDetailsMap[temp.bacteria_id] = [temp];
+        }
+   }
+
+   return nodeDetailsMap ;
+}
+function getKeyFromName(name){
+var regExp = /\(([^)]+)\)/;
+var matches = regExp.exec(name);
+return matches[1];
+}
