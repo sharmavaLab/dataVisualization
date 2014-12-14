@@ -1,11 +1,21 @@
 var loginControllers = angular.module('loginControllers',[]); 
 var jsons=[];
-loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadManager',function ($scope, $rootScope, uploadManager) {
+var _user;
+loginControllers.controller('FileUploadCtrl',['$http','$scope', '$rootScope', 'uploadManager','sessionService',function ($http,$scope, $rootScope, uploadManager,sessionService) {
     $scope.files = [];
     $scope.percentage = 0;
     $scope.upload = function () {
-        uploadManager.upload();
-        $scope.files = [];
+
+	 
+	console.log("here in upload"+sessionService.get('user'));
+		$http.post('./../Server/addUserUpload.php', {'uname':sessionService.get('user'),'uploads': jsons}
+                    ).success(function(data, status, headers, config) {
+						console.log("in succcess of uploads");
+						console.log(data);
+                    }).error(function(data, status) { 
+						console.log("in Error of uploads");
+						console.log(data);
+                    });
     };
 
     $rootScope.$on('fileAdded', function (e, call) {
@@ -16,24 +26,31 @@ loginControllers.controller('FileUploadCtrl',['$scope', '$rootScope', 'uploadMan
 	$rootScope.$on('getJson', function (e, call) {
         //console.log(call);
 		var uploadObject={};
-		uploadObject.treeData = call;
+		uploadObject.treeData = call[0];
+		uploadObject.xmlFilename = call[1];
 		jsons.push(uploadObject);
+		//console.log(JSON.stringify(uploadObject));
     });
 	$rootScope.$on('getNode', function (e, call) {
 		var index  = call[0];
 		var nodeData = call[1];
-		console.log(nodeData);
+		var fileName = call[2];
+		//console.log(nodeData);
 		nodeData =  textToJSONParser(nodeData);
 		 //console.log(nodeData);
 		var nodeMap = populateNodeDetailsMap(nodeData);
 		 console.log(nodeMap);
 		jsons[index].nodes = nodeMap;
+		jsons[index].nodeFilename = fileName;
 		//jsons.push(call);
     });
     $rootScope.$on('uploadProgress', function (e, call) {
 		
         $scope.percentage = call;
         $scope.$apply();
+    });
+	$rootScope.$on('uploadFile', function (e, call) {
+        
     });
 }]);
 
@@ -70,13 +87,15 @@ loginControllers.controller("LoginController",function($scope,$http,$location,se
 			alert("Please enter all fields");
 		}
 		else{
+			$scope.passwordMatch = false;
+			$scope.duplicate = false;
+			if($scope.password === $scope.password_confirmation ){
 			var hash_password= sha256_digest($scope.password);
 			$http.post('./../Server/addUser.php', {'fname': $scope.fname, 'lname': $scope.lname, 'uname':$scope.username, 'email':$scope.email, 'password':hash_password}
                     ).success(function(data, status, headers, config) {
 						console.log(data);
                         if(data == "Success"){
 							$scope.isAdded = true;
-							$scope.duplicate = false;
 							$scope.closeModal  = true;
 						}
 						else{
@@ -87,10 +106,16 @@ loginControllers.controller("LoginController",function($scope,$http,$location,se
                     }).error(function(data, status) { 
                        alert("error");
                     });
-			
+			}
+			else{
+				$scope.passwordMatch = true;
+			}
 		}
 
 	};
+	$('#register').on('hidden.bs.modal', function () {
+		console.log("ended regiter modal");
+})
 });
 
 loginControllers.controller("dashboardController",function($scope,$http,$location,sessionService){
@@ -124,6 +149,7 @@ $('#visualize').on('shown.bs.modal', function () {
 $scope.doVisualize = function(index) {
             //alert("I'm global foo!"+dataVar[0]);
 			//console.log(jsons[index].nodes);
+			console.log(jsons);
 			var dataVar = jsons[index].treeData;
 			var nodeMap = (jsons[index].nodes);
 var width = 1000;
@@ -136,7 +162,7 @@ var diagonal = d3.svg.diagonal()
    .projection (function(d) { return [x(d.y), d.x];});
 
 var svg = d3.select("#visualizeBody").append("svg")
-   .attr("width",width)
+   .attr("width",10000)
    .attr("height",height)
    .attr("transform", "rotate(0)")//change
    .append("g")
@@ -193,11 +219,16 @@ var ymin = Number.MAX_VALUE;
    node.append("circle")
       .attr("r", 7.5)
 	  .on("click",function(d){
-	  var key = getKeyFromName(d.name);
-	  console.log(nodeMap);
-	  console.log(nodeMap[key]);
 	  $('#displayBlock').empty();
+	  var key = getKeyFromName(d.name);
+	  //console.log(nodeMap);
+	  //console.log(nodeMap[key]);
+	  if(nodeMap == undefined || nodeMap[key] == undefined){
+		$('#displayBlock').append('<div style="max-width: 800px;" class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><b> &nbsp;No node data found for <strong>'+ d.name +'</strong> &nbsp;&nbsp;</b></div>');
+	  }
+	  else{
 	   doInit(nodeMap[key]);
+	   }
 	  });
    node.append("text")
       .attr("dx", function(d) { return d.children ? -8 : 8; })
@@ -212,7 +243,7 @@ var ymin = Number.MAX_VALUE;
 function textToJSONParser(data){
 //remove all the tabs from the data
  //alert("came here");
- console.log(data);
+ //sconsole.log(data);
   data = data.replace(/\t/g, ' ');
   data = data.replace(/\r/g, '');
   //split the recieved data into multiple rows
@@ -251,5 +282,8 @@ function populateNodeDetailsMap(jsonObject){
 function getKeyFromName(name){
 var regExp = /\(([^)]+)\)/;
 var matches = regExp.exec(name);
+if(matches == undefined)
+return null;
+else
 return matches[1];
 }

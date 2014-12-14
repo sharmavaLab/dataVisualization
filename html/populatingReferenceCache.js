@@ -1,9 +1,5 @@
 function doInit(raw_data){
-  //var currentNodeData = readNodeDetails("textData");
-  console.log(JSON.stringify(raw_data));
-  //var returned_String=textToJSONParser(raw_data);
    var currentNodeData =  JSON.parse(JSON.stringify(raw_data));
-  //console.log(currentNodeData);
   populateNodeMap(currentNodeData);
 }
 
@@ -253,21 +249,6 @@ var raw_data= loadFile(id+".txt");
 var returned_String=textToJSONParser(raw_data);
 return JSON.parse(JSON.stringify(returned_String));
 }
-
-function loadFile(filename){
-  //alert("load file");
-  if (window.XMLHttpRequest){
-    xhttp=new XMLHttpRequest();
-    }
-  else{ //code for IE5 and 6
-    xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-  xhttp.open("GET",filename,false);
-  xhttp.send();
-  return xhttp.responseText;
-}
-
 /*function textToJSONParser(data){
 //remove all the tabs from the data
  // alert("came here")

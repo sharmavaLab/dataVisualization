@@ -47,6 +47,21 @@ class User
 		else
 			return true;
 	}
+	public function insertUploads($uploads){
+		$this->database->setDatabase('datavisualization');
+		$collection = $this->database->getCollection('userUploads');
+		try{
+		foreach($uploads as $upload){
+			$collection->update(array("_id"=>$this->userName),array('$addToSet' => array('uploads'=>$upload)));
+		}
+		$this->database->database_connect->close();
+		}
+		catch (MongoWriteConcernException $e) {
+				$this->database->database_connect->close();
+				return $e;
+		}
+		return "success";
+	}
 	public function add()
 	{
 		$this->database->setDatabase('datavisualization');
@@ -59,14 +74,26 @@ class User
 						'email' => "$this->email"
                         );
 		try{
-		$isInsert = $collection->insert( $user);
+		$isInsert = $collection->insert($user);
+		//$this->database->database_connect->close();
+		
+		//
+		//$this->database->setDatabase('datavisualization');
+		$collection = $this->database->getCollection('userUploads');
+		$userUploads = array(
+								'_id'=>"$this->userName",
+								'uploads'=>array()
+		);
+		$isInsertUpload = $collection->insert($userUploads);
 		$this->database->database_connect->close();
+		//
+		
 		}
 		catch (MongoWriteConcernException $e) {
 				$this->database->database_connect->close();
 		  return "Failure ";
 		}
-		if($isInsert)
+		if($isInsert && $isInsertUpload)
 			return "Success";
 		else
 			return "Failure";

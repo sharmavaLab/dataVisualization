@@ -58,8 +58,8 @@
 				</ul>
 		  </div>
 		  <hr class = "colorgraph">
-		  <div class="form-actions">
-					<!--<button type="submit" class="btn btn-primary pull-left" ng-click="upload()">Upload</button>-->
+		  <div>
+					<button ng-show="files.length"  class="btn btn-primary pull-left" ng-click="upload()">Upload</button>
           </div>
 		  <div id="uploadError"></div>
 		</div>
@@ -80,7 +80,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button type="button" class="pull-right btn btn-danger" data-dismiss="modal">close</button>
         <h4 class="modal-title" id="myModalLabel">Visualization</h4>
       </div>
 	  <div class ="modal-body" style="height:130px;" id="displayBlock"></div>
