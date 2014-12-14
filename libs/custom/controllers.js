@@ -18,20 +18,23 @@ loginControllers.controller('FileUploadCtrl',['$http','$scope', '$rootScope', 'u
                     });
     };
 
-    $rootScope.$on('fileAdded', function (e, call) {
+    $scope.$on('fileAdded', function (e, call) {
 		
         $scope.files.push(call);
         $scope.$apply();
     });
-	$rootScope.$on('getJson', function (e, call) {
-        //console.log(call);
+	$scope.$on('getJson', function (e, call) {
+        console.log("getJson called ");
+		console.log(e);
 		var uploadObject={};
 		uploadObject.treeData = call[0];
 		uploadObject.xmlFilename = call[1];
+		console.log(jsons);
 		jsons.push(uploadObject);
+		console.log(jsons);
 		//console.log(JSON.stringify(uploadObject));
     });
-	$rootScope.$on('getNode', function (e, call) {
+	$scope.$on('getNode', function (e, call) {
 		var index  = call[0];
 		var nodeData = call[1];
 		var fileName = call[2];
@@ -48,9 +51,6 @@ loginControllers.controller('FileUploadCtrl',['$http','$scope', '$rootScope', 'u
 		
         $scope.percentage = call;
         $scope.$apply();
-    });
-	$rootScope.$on('uploadFile', function (e, call) {
-        
     });
 }]);
 
@@ -118,6 +118,7 @@ loginControllers.controller("LoginController",function($scope,$http,$location,se
 })
 });
 
+
 loginControllers.controller("dashboardController",function($scope,$http,$location,sessionService){
 
  $scope.user = sessionService.get('user');
@@ -133,7 +134,13 @@ loginControllers.controller("dashboardController",function($scope,$http,$locatio
 $scope.logout= function(){
 
 	sessionService.destroy('user');
+	jsons= [];
 	$location.path('/login');
+
+};
+$scope.profile= function(){
+
+	$location.path('/profile');
 
 };
 $('#visualize').on('hidden.bs.modal', function () {

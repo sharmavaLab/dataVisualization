@@ -3,25 +3,6 @@ var dataVisualization = angular.module("dataVisualization", [
     'ngCookies',
     'loginControllers'
 ]);
-
-/*getContents = function(){
-			var start =  0;
-			var stop = file.size - 1;
-			var reader = new FileReader();
-			var _contents;
-			var blob= file.slice(0, file.size);
-			reader.readAsBinaryString(blob);
-			reader.onloadend = function(evt) {
-			if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-				//file contents
-				_contents = evt.target.result;
-				console.log(_contents);
-				//return contents;
-				}
-			};
-			return _contents;
-		}*/
-
 dataVisualization.factory('uploadManager', function($rootScope,sessionService) {
     var _files = [];
     return {
@@ -49,7 +30,7 @@ dataVisualization.factory('uploadManager', function($rootScope,sessionService) {
 		if(formated_Xml.indexOf("<phylogeny")>0){
 			formated_Xml= formated_Xml.slice(formated_Xml.indexOf("<phylogeny"), formated_Xml.length );
 			formated_Xml = formated_Xml.slice(formated_Xml.indexOf(">")+1,formated_Xml.indexOf("</phylogeny>"));
-		}
+			}
 		    formated_Xml= StringToXML(formated_Xml.trim());
 			//console.log(formated_Xml);
 			var data = xmlToJson(formated_Xml);
@@ -62,6 +43,7 @@ dataVisualization.factory('uploadManager', function($rootScope,sessionService) {
 			var xmlJson =[];
 			xmlJson[0] = output_Json;
 			xmlJson[1] = xml_data[1];
+			console.log("broadcast json");
 			$rootScope.$broadcast('getJson', xmlJson);
 		}
     };
@@ -197,6 +179,10 @@ dataVisualization.config(['$routeProvider', function($routeProvider) {
         templateUrl: '../html/dashboardPartial.htm',
         controller: 'dashboardController'
     }).
+	when('/profile', {
+        templateUrl: '../html/profilePartial.htm',
+        controller: 'profileController'
+    }).
     otherwise({
         redirectTo: '/login'
     });
@@ -222,7 +208,7 @@ dataVisualization.directive('upload', ['uploadManager', function factory(uploadM
             $(element).fileupload({
                 dataType: 'text',
                 add: function(e, data) {
-					//console.log(attrs);
+					console.log("check ");
 					$('#uploadError').empty();
                     var file = data.files[0];
                     console.log(file.name);
